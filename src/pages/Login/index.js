@@ -33,7 +33,7 @@ const Login = () => {
 
     const { signIn } = useAuth()
 
-    const [email, setEmail] = useState('rafael_angonese@unochapeco.edu.br');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState({})
 
