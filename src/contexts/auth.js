@@ -27,17 +27,24 @@ export const AuthProvider = ({ children }) => {
 
     async function signIn(email, password) {
 
-        const response = await api.post('/authenticate', {
-            email: email,
-            password: password
-        });
+        try {
+            const response = await api.post('/authenticate', {
+                email: email,
+                password: password
+            })
 
-        setUser(response.data.user)
+            setUser(response.data.user)
 
-        api.defaults.headers.Authorization = `Bearer ${response.data.token}`
+            api.defaults.headers.Authorization = `Bearer ${response.data.token}`
 
-        await AsyncStorage.setItem('@AuthRN:user', JSON.stringify(response.data.user))
-        await AsyncStorage.setItem('@AuthRN:token', response.data.token)
+            await AsyncStorage.setItem('@AuthRN:user', JSON.stringify(response.data.user))
+            await AsyncStorage.setItem('@AuthRN:token', response.data.token)
+
+            return response.data
+
+        } catch (error) {
+            return error.response
+        }
     }
 
     async function signOut() {
